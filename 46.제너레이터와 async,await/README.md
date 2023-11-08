@@ -38,11 +38,8 @@ class MyClass {
 }
 ```
 
-<aside>
-💡 (`*`) 위치는 function 키워드와 함수 이름 사이라면 어디든 상관없다.
-하지만 일관성을 유지하기 위해  [ `function*` ]을 권장한다!
-
-</aside>
+> 💡 (`*`) 위치는 function 키워드와 함수 이름 사이라면 어디든 상관없다.
+> 하지만 일관성을 유지하기 위해 [ `function*` ]을 권장한다!
 
 제너레이터 함수는 화살표 함수로 정의할 수 없고, 생성자 함수로 호출 할 수 없다.
 
@@ -226,52 +223,7 @@ for (const num of infiniteFibonacci) {
 
 프로미스의 후속 처리 메서드 `then`/`catch`/`finally` 없이 비동기 처리 결과를 구현할 수 있다.
 
-```jsx
-// 제너레이터 실행기
-const async = (generatorFunc) => {
-  const generator = generatorFunc(); // ②
-
-  const onResolved = (arg) => {
-    const result = generator.next(arg); // ⑤
-
-    return result.done
-      ? result.value // ⑨
-      : result.value.then((res) => onResolved(res)); // ⑦
-  };
-
-  return onResolved; // ③
-};
-
-async(function* fetchTodo() {
-  // ①
-  const url = "https://jsonplaceholder.typicode.com/todos/1";
-
-  const response = yield fetch(url); // ⑥
-  const todo = yield response.json(); // ⑧
-  console.log(todo);
-  // {userId: 1, id: 1, title: 'delectus aut autem', completed: false}
-})(); // ④
-```
-
-1. async함수 호출
-
-- 인수로 전달받은 제너레이터 함수 `fetchTodo`를 호출하여 제너레이터 객체를 생성한다.
-- `onResolved` 함수를 즉시 호출 ②에서 생성한 제너레이터 객체의 `next` 메서드를 처음 호출(⑤)한다.
-
-1. `next` 메서드가 처음 호출(⑤)
-
-- 제너레이터 함수 `fetchTodo`의 첫 번째 `yield`(⑥)까지 실행된다.
-  - `{ done: false}`: fetch함수가 반환한 `프로미스`가 resolve한 `response` 객체를 `onResolved` 함수에 인수로 전달하면서 `재귀 호출`(⑦)한다.
-
-1. `next` 메서드를 두 번째로 호출(⑤)
-
-- `onResolved` 함수에 인수로 전달된 `response` 객체가 `next` 메서드에 `인수`로 전달되어 호출된다.
-- response 객체는 제너레이터 함수 fetchTodo의 response 변수(⑥)에 할당, 제너레이터 함수 fetchTodo의 두 번째 `yield` 문(⑧)까지 실행된다.
-
-1.
-
-<aside>
-💡 `async/await`를 사용하면 제너레이터 실행기를 사용할 필요가 없지만, 제너레이터가 필요하다면 `co 라이브러리`를 사용하는 것을 추천한다.
+> `async/await`를 사용하면 제너레이터 실행기를 사용할 필요가 없지만, 제너레이터가 필요하다면 `co 라이브러리`를 사용하는 것을 추천한다.
 
 </aside>
 
@@ -332,18 +284,17 @@ class MyClass {
 const myClass = new MyClass();
 ```
 
-<aside>
-💡 async 클래스 메서드
-
-```jsx
-class Waiter {
-  async wait() {
-    return await Promsie.resolve(1);
-  }
-}
-
-new Waiter().wait().then(alert);
-```
+> 💡 async 클래스 메서드
+>
+> ```jsx
+> class Waiter {
+>   async wait() {
+>     return await Promsie.resolve(1);
+>   }
+> }
+>
+> new Waiter().wait().then(alert);
+> ```
 
 </aside>
 
@@ -438,22 +389,19 @@ const foo = async () => {
 foo().then(console.log).catch(console.error); // TypeError: Failed to fetch
 ```
 
-<aside>
-💡 `await`는 최상위 레벨 코드에서 작동하지 않는다.
-
-```jsx
-// 최상위 레벨 코드에서는 문법 에러가 발생한다.
-const res = await fetch(`https://api.github.com/users/${id}`);
-const { name } = await res.json();
-```
-
-익명 async 함수로 코드를 감싸면 사용 가능하다.
-
-```jsx
-(async () => {
-  const res = await fetch(`https://api.github.com/users/${id}`);
-  const { name } = await res.json();
-})();
-```
-
-</aside>
+> 💡 `await`는 최상위 레벨 코드에서 작동하지 않는다.
+>
+> ```jsx
+> // 최상위 레벨 코드에서는 문법 에러가 발생한다.
+> const res = await fetch(`https://api.github.com/users/${id}>`);
+> const { name } = await res.json();
+> ```
+>
+> 익명 async 함수로 코드를 감싸면 사용 가능하다.
+>
+> ```jsx
+> (async () => {
+>   const res = await fetch(`https://api.github.com/users/${id}>`);
+>   const { name } = await res.json();
+> })();
+> ```

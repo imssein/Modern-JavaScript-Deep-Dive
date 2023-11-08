@@ -81,7 +81,7 @@ console.log(response); // undefined
 **[XMLHttpRequest와 비동기 함수 호출]**
 
 - XMLHttpRequest 객체를 사용하여 GET 요청을 보내는 경우, 서버 응답은 **`xhr.onload`** 이벤트 핸들러 내에서 처리됩니다.
-- 이 이벤트 핸들러는 비동기로 동작하며, **`console.log`**가 호출되기 직전에 실행되지 않습니다.
+- 이 이벤트 핸들러는 비동기로 동작하며, `console.log`가 호출되기 직전에 실행되지 않습니다.
 - 결과적으로, **`xhr.onload`** 이벤트 핸들러가 완료된 후에 서버 응답 데이터를 얻을 수 있습니다.
 
 ```jsx
@@ -129,10 +129,7 @@ console.log(todos); // ② undefined
    - load 이벤트 발생하고 해당 이벤트는 태스크 큐에 저장되어 대기한다.
    - 콜 스택이 비어 있는 상태에서 이벤트 루프에 의해 태스크 큐의 이벤트가 콜 스택으로 푸시되어 실행된다.
 
-<aside>
-💡 xhr.onload 이벤트 핸들러가 실행되는 시점에 콜 스택이 빈 상태여야 하므로 console.log는 이미 종료된 이후이다.
-
-</aside>
+> 💡 xhr.onload 이벤트 핸들러가 실행되는 시점에 콜 스택이 빈 상태여야 하므로 console.log는 이미 종료된 이후이다.
 
 ```jsx
 // GET 요청을 위한 비동기 함수
